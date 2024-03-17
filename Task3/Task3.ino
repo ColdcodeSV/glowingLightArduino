@@ -26,3 +26,32 @@ void setup() {
   *ddrd &= ~(1 << 7); // PD7 för knappen till lysdioden på port D
   *portd |= (1 << 7); // Aktivera pull-up resistor för knappen på PD7
 }
+
+void loop() {
+  if (!(*pind & (1 << 4))) {
+    *portb |= (1 << 5); 
+  } else {
+    *portb &= ~(1 << 5);
+  }
+  
+  // Kontrollera knapp för externa lysdioden på port B (PD5)
+  if (!(*pind & (1 << 5))) {
+    *portb |= (1 << 1); // Tänd externa lysdioden på port B
+  } else {
+    *portb &= ~(1 << 1); // Släck externa lysdioden på port B
+  }
+  
+  // Kontrollera knapp för lysdioden på port C (PD6)
+  if (!(*pind & (1 << 6))) {
+    *portb |= (1 << 2); // Tänd lysdioden på port C
+  } else {
+    *portb &= ~(1 << 2); // Släck lysdioden på port C
+  }
+
+   // Kontrollera knapp för lysdioden på port D (PD7)
+  if (!(*pind & (1 << 7))) {
+    *portb |= (1 << 4); // Tänd lysdioden på port D
+  } else { 
+    *portb &= ~(1 << 4); // Släck lysdioden på port D
+  }
+}
