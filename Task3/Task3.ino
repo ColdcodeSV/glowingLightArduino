@@ -8,10 +8,10 @@ volatile uint8_t* pind = (volatile uint8_t*)0x29; // PIN D register för att lä
 
 void setup() {
   // Sätt utgång för LED-lamporna
-  *ddrb |= (1 << 1); // PB1 för den externa lysdioden
+  *ddrb |= (1 << 1); // PB1 för lysdioden på port B
   *ddrb |= (1 << 2); // PB2 för lysdioden på port B
   *ddrb |= (1 << 4); // PB3 för lysdioden på port B
-  *ddrb |= (1 << 5); // PB5 för lysdioden på port B
+  *ddrb |= (1 << 5); // PB5 för den inbyggda lysdioden på port B
   
   // Knappar som ingångar med pull-up resistor
   *ddrd &= ~(1 << 4); // PD4 för knappen till inbyggd lysdiod
