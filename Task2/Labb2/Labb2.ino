@@ -6,3 +6,15 @@ volatile uint8_t* portc = (volatile uint8_t*)0x28; // Port C register för att k
 
 volatile uint8_t* ddrd = (volatile uint8_t*)0x2A; // Data Direction Register för port D
 volatile uint8_t* portd = (volatile uint8_t*)0x2B; // Port D register för att kontrollera utgångar
+
+// Tidsstämplar för när varje lysdiod senast tändes
+unsigned long previousTimeBuiltInLed = 0; // För den inbyggda lysdioden
+unsigned long previousTimePortB = 0; // För den externa lysdioden på port B (PB4)
+unsigned long previousTimePortC = 0; // För lysdioden på port C (PC3)
+unsigned long previousTimePortD = 0; // För lysdioden på port D (PD2)
+
+// Intervall för varje lysdiod (i millisekunder)
+int intervalBuiltInLed = 800; // Intervall för den inbyggda lysdioden
+int intervalPortB = 1000; // Intervall för den externa lysdioden på port B (PB4)
+int intervalPortC = 1200; // Intervall för lysdioden på port C (PC3)
+int intervalPortD = 1500; // Intervall för lysdioden på port D (PD2)
