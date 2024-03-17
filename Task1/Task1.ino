@@ -18,7 +18,7 @@ void loop() {
   // Read the state of pin 2 (PD2)
   int controlState = (*portd >> 2) & 1;
   
-  // Set pin 12 (PB5) based on the state of pin 2 (PD2)
+  // Set pin 13 (PB5) based on the state of pin 2 (PD2)
   if (controlState == 1) {
     *portb |= (1 << 5); // Turn on PB5
   } else {
