@@ -18,3 +18,47 @@ int intervalBuiltInLed = 800; // Intervall för den inbyggda lysdioden
 int intervalPortB = 1000; // Intervall för den externa lysdioden på port B (PB4)
 int intervalPortC = 1200; // Intervall för lysdioden på port C (PC3)
 int intervalPortD = 1500; // Intervall för lysdioden på port D (PD2)
+
+void setup() {
+  // Sätt utgång för varje lysdiod
+  *ddrb |= (1 << 4); // PB4 (externa lysdioden)
+  *ddrb |= (1 << 5); // PB5 (inbyggd lysdiod)
+  *ddrc |= (1 << 3); // PC3
+  *ddrd |= (1 << 2); // PD2
+}
+
+void loop() {
+  unsigned long currentMillis = millis(); // Aktuell tid
+
+  // Kontrollera om det är dags att tända eller släcka den inbyggda lysdioden
+  if (currentMillis - previousTimeBuiltInLed >= intervalBuiltInLed) {
+    // Tänd eller släck den inbyggda lysdioden
+    PORTB ^= (1 << 5); // Toggla PB5 (inbyggda lysdioden)
+    // Uppdatera tidsstämpeln för den inbyggda lysdioden
+    previousTimeBuiltInLed = currentMillis;
+  }
+
+  // Kontrollera om det är dags att tända eller släcka den externa lysdioden på port B (PB4)
+  if (currentMillis - previousTimePortB >= intervalPortB) {
+    // Tänd eller släck den externa lysdioden på port B (PB4)
+    PORTB ^= (1 << 4); // Toggla PB4 (externa lysdioden)
+    // Uppdatera tidsstämpeln för den externa lysdioden på port B (PB4)
+    previousTimePortB = currentMillis;
+  }
+
+  // Kontrollera om det är dags att tända eller släcka lysdioden på port C (PC3)
+  if (currentMillis - previousTimePortC >= intervalPortC) {
+    // Tänd eller släck lysdioden på port C (PC3)
+    PORTC ^= (1 << 3); // Toggla PC3
+    // Uppdatera tidsstämpeln för lysdioden på port C (PC3)
+    previousTimePortC = currentMillis;
+  }
+
+  // Kontrollera om det är dags att tända eller släcka lysdioden på port D (PD2)
+  if (currentMillis - previousTimePortD >= intervalPortD) {
+    // Tänd eller släck lysdioden på port D (PD2)
+    PORTD ^= (1 << 2); // Toggla PD2
+    // Uppdatera tidsstämpeln för lysdioden på port D (PD2)
+    previousTimePortD = currentMillis;
+  }
+}
