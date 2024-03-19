@@ -34,3 +34,42 @@ void setup() {
   // Starta seriell kommunikation med baud rate 9600
   Serial.begin(9600);
 }
+
+void loop() {
+  // Fördröjning för att undvika snabba knapptryckningar
+  delay(150);
+
+  // Variabel för att räkna knapptryckningar
+  int button_presses = 0;
+
+  // Kontrollera om knappen på pinne 4 på Port D trycks ner
+  if (!(*pind & (1 << 4))) {
+    *portb |= (1 << 5); // Sätt på blå LED
+    counter++; // Öka räknaren
+    Serial.println(counter); // Skriv ut räknaren via seriell kommunikation
+    button_presses++; // Öka antalet knapptryckningar
+  } else {
+    *portb &= ~(1 << 5); // Stäng av blå LED
+  }
+
+  // Upprepa samma process för de andra knapparna och motsvarande LED-lampor
+
+  // Aktivera andra gröna LED om räknaren är en multipel av 10 och inte noll
+  if (counter % 10 == 0 && counter != 0) {
+    *portb |= (1 << 0); // Sätt på andra gröna LED
+    delay(3000); // Vänta i 3 sekunder
+    *portb &= ~(1 << 0); // Stäng av andra gröna LED
+  }
+
+  // Aktivera andra gröna LED om minst 2 knappar trycks samtidigt
+  if (button_presses >= 2) {
+    *portb |= (1 << 0); // Sätt på andra gröna LED
+    delay(3000); // Vänta i 3 sekunder
+    *portb &= ~(1 << 0); // Stäng av andra gröna LED
+  }
+
+  // Återställ räknaren om den når 10 eller mer
+  if (counter >= 10) {
+    counter = 0; // Återställ räknaren till noll
+  }
+}
