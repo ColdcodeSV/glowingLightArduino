@@ -51,10 +51,32 @@ void loop() {
   } else {
     *portb &= ~(1 << 5); // Stäng av blå LED
   }
+ if (!(*pind & (1 << 5))) {
+    *portb |= (1 << 1);
+    counter++;
+    Serial.println(counter);
+    button_presses++;
+  } else {
+    *portb &= ~(1 << 1);
+  }
+ if (!(*pind & (1 << 6))) {
+    *portb |= (1 << 2);
+    counter++;
+    Serial.println(counter);
+    button_presses++;
+  } else {
+    *portb &= ~(1 << 2);
+  }
 
-  // Upprepa samma process för de andra knapparna och motsvarande LED-lampor
-
-  // Aktivera andra gröna LED om räknaren är en multipel av 10 och inte noll
+ if (!(*pind & (1 << 7))) {
+    *portb |= (1 << 4);
+    counter++;
+    Serial.println(counter);
+    button_presses++;
+  } else {
+    *portb &= ~(1 << 4);
+  }
+ // Aktivera andra gröna LED om räknaren är en multipel av 10 och inte noll
   if (counter % 10 == 0 && counter != 0) {
     *portb |= (1 << 0); // Sätt på andra gröna LED
     delay(3000); // Vänta i 3 sekunder
